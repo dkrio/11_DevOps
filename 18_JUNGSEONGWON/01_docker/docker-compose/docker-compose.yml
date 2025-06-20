@@ -1,0 +1,29 @@
+services:
+  backend:
+    build: ./chap01-01-boot-project
+    container_name: backend
+    ports:
+      - "8080:8080"
+    networks:
+      - app-public
+      - app-private
+  frontend:
+    build: ./chap-01-02-react-project
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - app-public
+  tester:
+    image: alpine # 기능이 살았는 지 죽었는 지 확인하는 구문
+    container_name: net-tester
+    command: sleep 3600
+    networks:
+      - app-public
+
+networks:
+  app-public:
+    driver: bridge
+  app-private:
+    driver: bridge
+    internal: true
